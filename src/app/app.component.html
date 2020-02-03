@@ -1,0 +1,91 @@
+<nav class="navbar navbar-dark bg-primary">
+  <a class="navbar-brand" href="/">
+  Agenda Angular</a>
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table table-striped bg-success">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody *ngFor= "let contacto of contactosArray;let i=index" 
+                (click) ="editar(contacto)"
+                [class.active]= "selectedContacto==contacto">
+        <th scope="row"><span class="badge badge-warning">{{contacto.id}}</span></th>
+        <th>{{contacto.nombre}}</th>
+        <th>{{contacto.apellido}}</th>
+        <th>{{contacto.celular}}</th>
+        <th>{{contacto.email}}</th>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <form  [formGroup] = "formContacto">
+      <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div class="card-header">
+          <h3> Datos del contacto</h3>
+        </div>
+        {{selectedContacto.id}}
+        <div class="card-body">
+          <input type="text"
+                            [(ngModel)]= "selectedContacto.id" 
+                            disabled
+                            required           
+                            placeholder="0"
+                            class="form-control">
+                            
+          <h4>Nombre:</h4><input [(ngModel)]= "selectedContacto.nombre" 
+                                  type="text" 
+                                  required
+                                  disabled
+                                  formControlName="nombre"
+                                  class="form-control">
+
+         <h4>Apellido:</h4><input type="text" 
+                                  [(ngModel)]= "selectedContacto.apellido"   
+                                  required
+                                  disabled
+                                  formControlName="apellido"
+                                  class="form-control">
+
+         <h4>Celular:</h4><input type="number"
+                                  [(ngModel)]= "selectedContacto.celular"     
+                                  
+                                  required
+                                  disabled
+                                  formControlName="celular"
+                                  class="form-control">
+
+         <h4>Email:</h4><input type="email" 
+                              [(ngModel)]= "selectedContacto.email"   
+                              
+                              required
+                              disabled
+                              formControlName="email"
+                              class="form-control">
+          
+          <button type="submit" 
+                  class="btn btn-success" 
+                  (click)= "addOrEdit()">Guardar</button> 
+                  
+          <button type="button" 
+                  class="btn btn-primary" 
+                  (click)= "habilitar()"
+                  >Editar</button>
+
+          <button *ngIf= "this.formContacto.controls['id'].value !== 0"
+                  class="btn btn-danger"
+                  (click)= "borrar()"> Borrar</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
